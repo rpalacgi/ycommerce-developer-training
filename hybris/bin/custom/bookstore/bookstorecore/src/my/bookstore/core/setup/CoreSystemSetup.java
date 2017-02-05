@@ -1,12 +1,15 @@
 /*
  * [y] hybris Platform
  *
- * Copyright (c) 2017 SAP SE or an SAP affiliate company.  All rights reserved.
+ * Copyright (c) 2000-2016 hybris AG
+ * All rights reserved.
  *
- * This software is the confidential and proprietary information of SAP
+ * This software is the confidential and proprietary information of hybris
  * ("Confidential Information"). You shall not disclose such Confidential
  * Information and shall use it only in accordance with the terms of the
- * license agreement you entered into with SAP.
+ * license agreement you entered into with hybris.
+ *
+ *  
  */
 package my.bookstore.core.setup;
 
@@ -33,6 +36,7 @@ import java.util.List;
 public class CoreSystemSetup extends AbstractSystemSetup
 {
 	public static final String IMPORT_ACCESS_RIGHTS = "accessRights";
+	public static final String IMPORT_VERIFICATION_SCRIPTS = "verificationScripts";
 
 	/**
 	 * This method will be called by system creator during initialization and system update. Be sure that this method can
@@ -62,6 +66,7 @@ public class CoreSystemSetup extends AbstractSystemSetup
 		final List<SystemSetupParameter> params = new ArrayList<>();
 
 		params.add(createBooleanSystemSetupParameter(IMPORT_ACCESS_RIGHTS, "Import Users & Groups", true));
+		params.add(createBooleanSystemSetupParameter(IMPORT_VERIFICATION_SCRIPTS, "Import TrainingLabTools Verification Scripts", false));
 
 		return params;
 	}
@@ -79,26 +84,36 @@ public class CoreSystemSetup extends AbstractSystemSetup
 
 		final List<String> extensionNames = getExtensionNames();
 
-		processCockpit(context, importAccessRights, extensionNames, "cmscockpit",
+		processCockpit(context, importAccessRights, extensionNames,"cmscockpit",
 				"/bookstorecore/import/cockpits/cmscockpit/cmscockpit-users.impex",
 				"/bookstorecore/import/cockpits/cmscockpit/cmscockpit-access-rights.impex");
 
-		processCockpit(context, importAccessRights, extensionNames, "productcockpit",
+		processCockpit(context, importAccessRights, extensionNames,"btgcockpit",
+				"/bookstorecore/import/cockpits/cmscockpit/btgcockpit-users.impex",
+				"/bookstorecore/import/cockpits/cmscockpit/btgcockpit-access-rights.impex");
+
+		processCockpit(context, importAccessRights, extensionNames,"productcockpit",
 				"/bookstorecore/import/cockpits/productcockpit/productcockpit-users.impex",
 				"/bookstorecore/import/cockpits/productcockpit/productcockpit-access-rights.impex",
 				"/bookstorecore/import/cockpits/productcockpit/productcockpit-constraints.impex");
 
-		processCockpit(context, importAccessRights, extensionNames, "cscockpit",
+		processCockpit(context, importAccessRights, extensionNames,"cscockpit",
 				"/bookstorecore/import/cockpits/cscockpit/cscockpit-users.impex",
 				"/bookstorecore/import/cockpits/cscockpit/cscockpit-access-rights.impex");
 
-		processCockpit(context, importAccessRights, extensionNames, "reportcockpit",
+		processCockpit(context, importAccessRights, extensionNames,"reportcockpit",
 				"/bookstorecore/import/cockpits/reportcockpit/reportcockpit-users.impex",
 				"/bookstorecore/import/cockpits/reportcockpit/reportcockpit-access-rights.impex");
 
 		if (extensionNames.contains("mcc"))
 		{
 			importImpexFile(context, "/bookstorecore/import/common/mcc-sites-links.impex");
+		}
+		
+		final boolean importVerificationScripts = getBooleanSystemSetupParameter(context, IMPORT_VERIFICATION_SCRIPTS);
+		
+		if(importVerificationScripts){
+			importImpexFile(context, "/bookstorecore/import/common/verifyExercise/verifyExercises.impex");
 		}
 	}
 
