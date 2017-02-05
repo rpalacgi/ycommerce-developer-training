@@ -435,7 +435,7 @@
 		<property name="commerceCategoryService" ref="commerceCategoryService"/>
 		<property name="rootCategoryCode" value="categories"/>
 	</bean>
-	
+
 	<!-- bookstore specific configuration -->
 	
 		<bean name="pointsToNextLevelAttrHandler" 
@@ -446,18 +446,32 @@
 		<constructor-arg
 			value="#{T(my.bookstore.core.model.RewardStatusLevelConfigurationModel). _TYPECODE}" />
 	</bean>
-	
+
 	<alias alias="rentalDao" name="defaultRentalDao" />
-	<bean id="defaultRentalDao" class="my.bookstore.core.daos.impl.DefaultRentalDao" 
-	      parent="abstractItemDao">
-		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	<bean id="defaultRentalDao" class="my.bookstore.core.daos.impl.DefaultRentalDao"
+		parent="abstractItemDao">
 	</bean>
 
-	<!-- TODO exercise 5.1 -->
 	<bean name="customerDao"
 		class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao">
 		<constructor-arg
 			value="#{T(de.hybris.platform.core.model.user.CustomerModel). _TYPECODE}" />
+	</bean>
+
+	<!-- TODO exercise 6.1 -->
+	<!-- TODO exercise 6.2 -->
+	<!-- Uncomment the code below and add your implementation -->
+<!--  
+	<alias alias="bookstoreCustomerAccountService" name="defaultBookstoreCustomerAccountService" />
+	<bean id="defaultBookstoreCustomerAccountService"
+		class="my.bookstore.core.services.impl.DefaultBookstoreCustomerAccountService">
+		
+	</bean>
+-->
+
+	<alias alias="rentalService" name="defaultRentalService" />
+	<bean id="defaultRentalService" class="my.bookstore.core.services.impl.DefaultRentalService">
+		<!-- TODO exercise 6.3: add necessary properties -->
 	</bean>
 
 </beans>
