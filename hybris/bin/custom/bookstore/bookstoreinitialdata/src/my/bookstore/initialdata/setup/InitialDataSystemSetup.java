@@ -1,28 +1,36 @@
 /*
  * [y] hybris Platform
  *
- * Copyright (c) 2017 SAP SE or an SAP affiliate company.  All rights reserved.
+ * Copyright (c) 2000-2014 hybris AG
+ * All rights reserved.
  *
- * This software is the confidential and proprietary information of SAP
+ * This software is the confidential and proprietary information of hybris
  * ("Confidential Information"). You shall not disclose such Confidential
  * Information and shall use it only in accordance with the terms of the
- * license agreement you entered into with SAP.
+ * license agreement you entered into with hybris.
+ *
+ *  
  */
 package my.bookstore.initialdata.setup;
 
 import de.hybris.platform.commerceservices.dataimport.impl.CoreDataImportService;
 import de.hybris.platform.commerceservices.dataimport.impl.SampleDataImportService;
 import de.hybris.platform.commerceservices.setup.AbstractSystemSetup;
+import de.hybris.platform.commerceservices.setup.data.ImportData;
+import de.hybris.platform.commerceservices.setup.events.CoreDataImportedEvent;
+import de.hybris.platform.commerceservices.setup.events.SampleDataImportedEvent;
 import de.hybris.platform.core.initialization.SystemSetup;
 import de.hybris.platform.core.initialization.SystemSetup.Process;
 import de.hybris.platform.core.initialization.SystemSetup.Type;
 import de.hybris.platform.core.initialization.SystemSetupContext;
 import de.hybris.platform.core.initialization.SystemSetupParameter;
 import de.hybris.platform.core.initialization.SystemSetupParameterMethod;
-import my.bookstore.initialdata.constants.BookstoreInitialDataConstants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import my.bookstore.initialdata.constants.BookstoreInitialDataConstants;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
@@ -42,6 +50,7 @@ public class InitialDataSystemSetup extends AbstractSystemSetup
 	private static final String IMPORT_CORE_DATA = "importCoreData";
 	private static final String IMPORT_SAMPLE_DATA = "importSampleData";
 	private static final String ACTIVATE_SOLR_CRON_JOBS = "activateSolrCronJobs";
+	public static final String BOOKSTORE = "bookstore";
 
 	private CoreDataImportService coreDataImportService;
 	private SampleDataImportService sampleDataImportService;
@@ -53,6 +62,7 @@ public class InitialDataSystemSetup extends AbstractSystemSetup
 	@SystemSetupParameterMethod
 	public List<SystemSetupParameter> getInitializationOptions()
 	{
+
 		final List<SystemSetupParameter> params = new ArrayList<SystemSetupParameter>();
 
 		params.add(createBooleanSystemSetupParameter(IMPORT_CORE_DATA, "Import Core Data", true));
@@ -70,42 +80,44 @@ public class InitialDataSystemSetup extends AbstractSystemSetup
 	 * @param context
 	 *           the context provides the selected parameters and values
 	 */
-	@SystemSetup(type = Type.ESSENTIAL, process = Process.ALL)
-	public void createEssentialData(final SystemSetupContext context)
-	{
-		// Add Essential Data here as you require
-	}
+//	@SystemSetup(type = Type.ESSENTIAL, process = Process.ALL)
+//	public void createEssentialData(final SystemSetupContext context)
+//	{
+//		// Add Essential Data here as you require
+//		importImpexFile(context, "/bookstoreinitialdata/import/verifyExercise/verifyExercises.impex");
+//
+//	}
 
 	/**
 	 * Implement this method to create data that is used in your project. This method will be called during the system
-	 * initialization. <br>
-	 * Add import data for each site you have configured
-	 *
-	 * <pre>
-	 * final List<ImportData> importData = new ArrayList<ImportData>();
-	 *
-	 * final ImportData sampleImportData = new ImportData();
-	 * sampleImportData.setProductCatalogName(SAMPLE_PRODUCT_CATALOG_NAME);
-	 * sampleImportData.setContentCatalogNames(Arrays.asList(SAMPLE_CONTENT_CATALOG_NAME));
-	 * sampleImportData.setStoreNames(Arrays.asList(SAMPLE_STORE_NAME));
-	 * importData.add(sampleImportData);
-	 *
-	 * getCoreDataImportService().execute(this, context, importData);
-	 * getEventService().publishEvent(new CoreDataImportedEvent(context, importData));
-	 *
-	 * getSampleDataImportService().execute(this, context, importData);
-	 * getEventService().publishEvent(new SampleDataImportedEvent(context, importData));
-	 * </pre>
-	 *
+	 * initialization.
+	 * 
 	 * @param context
 	 *           the context provides the selected parameters and values
+	 */
+	/*
+	Those are project data and SystemSetup annotation should have type=Type.PROJECT, but just for training purpose we have set type = Type.ESSENTIAL so that data are imported during ant updatesystem
 	 */
 	@SystemSetup(type = Type.PROJECT, process = Process.ALL)
 	public void createProjectData(final SystemSetupContext context)
 	{
-		/*
-		 * Add import data for each site you have configured
-		 */
+		//There should be some change
+
+
+		final List<ImportData> importData = new ArrayList<ImportData>();
+
+		final ImportData sampleImportData = new ImportData();
+		sampleImportData.setProductCatalogName(BOOKSTORE);
+		sampleImportData.setContentCatalogNames(Arrays.asList(BOOKSTORE));
+		sampleImportData.setStoreNames(Arrays.asList(BOOKSTORE));
+		importData.add(sampleImportData);
+
+		getCoreDataImportService().execute(this, context, importData);
+		getEventService().publishEvent(new CoreDataImportedEvent(context, importData));
+
+		getSampleDataImportService().execute(this, context, importData);
+		getEventService().publishEvent(new SampleDataImportedEvent(context, importData));
+
 	}
 
 	public CoreDataImportService getCoreDataImportService()
