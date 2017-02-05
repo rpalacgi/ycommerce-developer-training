@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TrainingLabsTool - solutions - Dev1">
+	<loadproperties srcfile="exercises.properties" />
+
+	<path id="basedir.path">
+		<pathelement path="${basedir}" />
+	</path>
+	<pathconvert property="trainingLabToolDir" targetos="unix" refid="basedir.path" />
+
+	<target name="stop-server">
+		<java classname="de.hybris.training.StopHybrisPlatform" fork="true">
+			<classpath path="libs/StopHybrisPlatform.jar:${hybris.root.path}/bin/platform/resources/tanukiwrapper/lib/wrapper.jar" />
+			<arg line="${jmx.url}" />
+		</java>
+	</target>
+
+	<!--###### exercise 1 ######-->
+	<target name="Exercise01_Installation-solution" description="copy finished exercise 1" depends="stop-server">
+
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise1/solution/" />
+
+		<!-- import task definitions -->
+		<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+			<classpath>
+				<pathelement location="./libs/ant-contrib-1.0b3.jar" />
+			</classpath>
+		</taskdef>
+
+		<!-- remove previous folders -->
+		<if>
+			<available file="${hybris.root.path}/config" type="dir" />
+			<then>
+				<delete dir="${hybris.root.path}/config" />
+				<delete dir="${hybris.root.path}/data" />
+				<delete dir="${hybris.root.path}/log" />
+				<delete dir="${hybris.root.path}/roles" />
+				<delete dir="${hybris.root.path}/temp" />
+			</then>
+		</if>
+
+		<if>
+			<available file="${exercise.projects}/bookstore" type="dir" />
+			<then>
+				<delete dir="${exercise.projects}/bookstore" />
+			</then>
+		</if>
+
+		<!-- clean everything and set develop template for the installation  -->
+		<ant antfile="build.xml" target="clean" dir="${hybris.root.path}/bin/platform">
+			<property name="input.template" value="develop" />
+		</ant>
+
+		<!-- set the initial extensions and properties-->
+		<copy file="${tlts.source.dir}/ext_before_modulegen/localextensions.xml" tofile="${hybris.root.path}/config/localextensions.xml" overwrite="true" />
+		<copy file="${tlts.source.dir}/local.properties" tofile="${hybris.root.path}/config/local.properties" overwrite="true" />
+
+		<!-- build the platform for first time -->
+		<ant antfile="build.xml" target="all" dir="${hybris.root.path}/bin/platform" />
+
+		<!-- install addons -->
+		<ant antfile="build.xml" target="addoninstall" dir="${hybris.root.path}/bin/platform">
+			<property name="addonnames" value="liveeditaddon" />
+			<property name="addonStorefront.yacceleratorstorefront" value="yacceleratorstorefront" />
+		</ant>
+
+		<ant antfile="build.xml" target="addoninstall" dir="${hybris.root.path}/bin/platform">
+			<property name="addonnames" value="acceleratorwebservicesaddon" />
+			<property name="addonStorefront.ycommercewebservices" value="ycommercewebservices" />
+		</ant>
+
+		<!-- build the platform with addons -->
+		<ant antfile="build.xml" target="all" dir="${hybris.root.path}/bin/platform" />
+
+		<!-- generate module -->
+		<ant antfile="build.xml" target="modulegen" dir="${hybris.root.path}/bin/platform">
+			<property name="input.module" value="accelerator" />
+			<property name="input.name" value="bookstore" />
+			<property name="input.package" value="my.bookstore" />
+		</ant>
+
+		<!-- update config and properties-->
+		<copy file="${tlts.source.dir}/localextensions.xml" tofile="${hybris.root.path}/config/localextensions.xml" overwrite="true" />
+		<copy file="${tlts.source.dir}/local.properties" tofile="${hybris.root.path}/config/local.properties" overwrite="true" />
+
+		<!-- clean and build the platform again -->
+		<ant antfile="build.xml" target="clean" dir="${hybris.root.path}/bin/platform" />
+		<ant antfile="build.xml" target="all" dir="${hybris.root.path}/bin/platform" />
+
+		<!-- initialize the database -->
+		<ant antfile="build.xml" target="initialize" dir="${hybris.root.path}/bin/platform">
+			<property name="tenant" value="master" />
+		</ant>
+
+		<!-- initialize junit tenant -->
+		<ant antfile="build.xml" target="yunitinit" dir="${hybris.root.path}/bin/platform" />
+
+		<!-- import the verification scripts -->
+		<ant antfile="lab_exercises_preparation_dev1.xml" target="Start_the_Training" />
+
+	</target>
+	<!--###### exercise 1 end ######-->
+
+
+	<!--###### exercise 2 ######-->
+	<target name="Exercise02_Data_Modeling-solution" description="copy finished exercise 2" depends="stop-server">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise2/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstorecore/resources/" />
+
+		<!-- copy stuff to targets -->
+		<copy file="${tlts.source.dir}/bookstorecore-items.xml" tofile="${tlts.target.resdir}/bookstorecore-items.xml" overwrite="true" />
+		<copy file="${tlts.source.dir}/bookstorecore-locales_en.properties" tofile="${tlts.target.resdir}/localization/bookstorecore-locales_en.properties" overwrite="true" />
+
+		<!-- build the platform -->
+		<ant antfile="build.xml" target="all" dir="${hybris.root.path}/bin/platform" />
+
+		<!-- update the system -->
+		<ant antfile="build.xml" target="updatesystem" dir="${hybris.root.path}/bin/platform">
+			<property name="configFile" value="${trainingLabToolDir}/${tlts.source.dir}/config.json" />
+		</ant>
+
+		<!-- update junit tenant-->
+		<ant antfile="build.xml" target="yunitupdate" dir="${hybris.root.path}/bin/platform">
+			<property name="configFile" value="${trainingLabToolDir}/${tlts.source.dir}/config.json" />
+		</ant>
+
+	</target>
+	<!--###### exercise 2 end ######-->
+
+
+	<!--###### exercise 3 ######-->
+	<target name="Exercise03_Product_Modeling-solution" description="copy finished exercise 3" depends="stop-server">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise3/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstoreinitialdata/resources/bookstoreinitialdata/import/" />
+
+		<!-- copy stuff to targets -->
+		<copy todir="${tlts.target.resdir}/sampledata/productCatalogs/bookstoreProductCatalog/" overwrite="true">
+			<fileset dir="${tlts.source.dir}/sampledata/bookstoreProductCatalog" />
+		</copy>
+
+		<!-- build the platform -->
+		<ant antfile="build.xml" target="all" dir="${hybris.root.path}/bin/platform" />
+
+		<!-- update the system -->
+		<ant antfile="build.xml" target="updatesystem" dir="${hybris.root.path}/bin/platform">
+			<property name="configFile" value="${trainingLabToolDir}/${tlts.source.dir}/config.json" />
+		</ant>
+
+	</target>
+	<!--###### exercise 3 end ######-->
+
+	<!--###### exercise 4 ######-->
+	<target name="Exercise04_ImpEx-solution" description="copy finished exercise 4" depends="stop-server">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise4/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstoreinitialdata/resources/bookstoreinitialdata/import/" />
+
+		<!-- copy stuff to target -->
+		<copy file="${tlts.source.dir}/products.impex" tofile="${tlts.target.resdir}/sampledata/productCatalogs/bookstoreProductCatalog/products.impex" overwrite="true" />
+		<copy file="${tlts.source.dir}/products-classifications.impex" tofile="${tlts.target.resdir}/sampledata/productCatalogs/bookstoreProductCatalog/products-classifications.impex" overwrite="true" />
+
+		<!-- update the system -->
+		<ant antfile="build.xml" target="updatesystem" dir="${hybris.root.path}/bin/platform">
+			<property name="configFile" value="${trainingLabToolDir}/${tlts.source.dir}/config.json" />
+		</ant>
+	</target>
+	<!--###### exercise 4 end ######-->
+
+
+	<!--###### exercise 5 ######-->
+	<target name="Exercise05_Flexible_Search-solution" description="copy finished exercise 5">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise5/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstorecore/resources/" />
+		<property name="tlts.target.javadir" value="${exercise.projects}/bookstore/bookstorecore/src/" />
+		<property name="tlts.target.javatestdir" value="${exercise.projects}/bookstore/bookstorecore/testsrc/" />
+
+		<!-- copy stuff to targets -->
+		<copy file="${tlts.source.dir}/bookstorecore-spring.xml" tofile="${tlts.target.resdir}/bookstorecore-spring.xml" overwrite="true" />
+		<copy file="${tlts.source.dir}/DefaultRentalDao.java" tofile="${tlts.target.javadir}/my/bookstore/core/daos/impl/DefaultRentalDao.java" overwrite="true" />
+
+		<!-- build the platform-->
+		<ant antfile="build.xml" target="all" dir="${hybris.root.path}/bin/platform" />
+	</target>
+	<!--###### exercise 5 end ######-->
+
+	<!--###### exercise 6 ######-->
+	<target name="Exercise06_Services-solution" description="copy finished exercise 6">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise6/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstorecore/resources/" />
+		<property name="tlts.target.javadir" value="${exercise.projects}/bookstore/bookstorecore/src/" />
+		<property name="tlts.target.javatestdir" value="${exercise.projects}/bookstore/bookstorecore/testsrc/" />
+
+		<!-- copy stuff to targets -->
+		<copy file="${tlts.source.dir}/bookstorecore-spring.xml" toDir="${tlts.target.resdir}" overwrite="true" />
+		<copy file="${tlts.source.dir}/DefaultBookstoreCustomerAccountService.java" toDir="${tlts.target.javadir}/my/bookstore/core/services/impl/" overwrite="true" />
+		<copy file="${tlts.source.dir}/DefaultRentalService.java" toDir="${tlts.target.javadir}/my/bookstore/core/services/impl/" overwrite="true" />
+		<copy file="${tlts.source.dir}/DefaultBookstoreCustomerAccountServiceTest.java" toDir="${tlts.target.javatestdir}/my/bookstore/core/services/impl/" overwrite="true" />
+
+		<!-- build the platform-->
+		<ant antfile="build.xml" target="all" dir="${hybris.root.path}/bin/platform" />
+	</target>
+	<!--###### exercise 6 end ######-->
+
+	<!--###### exercise 7 ######-->
+	<target name="Exercise07_CommerceServicesFacades-solution" description="copy finished exercise 7">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise7/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstorefacades/resources/" />
+		<property name="tlts.target.javadir" value="${exercise.projects}/bookstore/bookstorefacades/src/" />
+
+		<!-- copy stuff to targets -->
+		<copy file="${tlts.source.dir}/bookstorefacades-beans.xml" tofile="${tlts.target.resdir}/bookstorefacades-beans.xml" overwrite="true" />
+		<copy file="${tlts.source.dir}/bookstorefacades-spring.xml" tofile="${tlts.target.resdir}/bookstorefacades-spring.xml" overwrite="true" />
+		<copy file="${tlts.source.dir}/BookstoreProductPopulator.java" tofile="${tlts.target.javadir}/my/bookstore/facades/populators/BookstoreProductPopulator.java" overwrite="true" />
+
+		<!-- build the platform-->
+		<ant antfile="build.xml" target="build" dir="${hybris.root.path}/bin/platform" />
+	</target>
+	<!--###### exercise 7 end ######-->
+
+	<!--###### exercise 8 ######-->
+	<target name="Exercise08_Validation-solution" description="copy finished exercise 8" depends="stop-server">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise8/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstorecore/resources/bookstorecore/import" />
+
+		<!-- copy stuff to targets -->
+		<copy file="${tlts.source.dir}/dynamicValidationScript.java" tofile="${tlts.target.resdir}/common/dynamicValidationScript.java" overwrite="true" />
+		<copy file="${tlts.source.dir}/essential-data.impex" tofile="${tlts.target.resdir}/common/essential-data.impex" overwrite="true" />
+
+		<!-- update the system -->
+		<ant antfile="build.xml" target="updatesystem" dir="${hybris.root.path}/bin/platform">
+			<property name="configFile" value="${trainingLabToolDir}/${tlts.source.dir}/config.json" />
+		</ant>
+	</target>
+	<!--###### exercise 8 end ######-->
+
+
+	<!--###### exercise 9 ######-->
+	<target name="Exercise09_WCMS-solution" description="copy finished exercise 9" depends="stop-server">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise9/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstoreinitialdata/resources/bookstoreinitialdata/import" />
+
+		<!-- copy stuff to targets -->
+		<copy file="${tlts.source.dir}/coredata/site.impex" tofile="${tlts.target.resdir}/coredata/stores/bookstore/site.impex" overwrite="true" />
+		<copy file="${tlts.source.dir}/sampledata/cms-content.impex" tofile="${tlts.target.resdir}/sampledata/contentCatalogs/bookstoreContentCatalog/cms-content.impex" overwrite="true" />
+		<copy file="${tlts.source.dir}/coredata/cms-content.impex" tofile="${tlts.target.resdir}/coredata/contentCatalogs/bookstoreContentCatalog/cms-content.impex" overwrite="true" />
+
+		<!-- update the system -->
+		<ant antfile="build.xml" target="updatesystem" dir="${hybris.root.path}/bin/platform">
+			<property name="configFile" value="${trainingLabToolDir}/${tlts.source.dir}/config.json" />
+		</ant>
+
+	</target>
+	<!--###### exercise 9 end ######-->
+
+	<!--###### exercise 10 ######-->
+	<target name="Exercise10_SearchAndNavigation-solution" description="copy finished exercise 14" depends="stop-server">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise10/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstoreinitialdata/resources/bookstoreinitialdata/import" />
+		<property name="tlts.target.javadir" value="${exercise.projects}/bookstore/bookstorefacades/src/" />
+
+		<!-- copy stuff to targets -->
+		<copy file="${tlts.source.dir}/bookstorefacades-spring.xml" tofile="${exercise.projects}/bookstore/bookstorefacades/resources/bookstorefacades-spring.xml" overwrite="true" />
+		<copy file="${tlts.source.dir}/SearchResultProductRewardPointsPopulator.java" tofile="${tlts.target.javadir}/my/bookstore/facades/populators/SearchResultProductRewardPointsPopulator.java" overwrite="true" />
+		<copy file="${tlts.source.dir}/cms-content.impex" tofile="${tlts.target.resdir}/sampledata/contentCatalogs/bookstoreContentCatalog/cms-content.impex" overwrite="true" />
+		<copy file="${tlts.source.dir}/solr.impex" tofile="${tlts.target.resdir}/sampledata/stores/bookstore/solr.impex" overwrite="true" />
+		<copy file="${tlts.source.dir}/localextensions.xml" tofile="${hybris.root.path}/config/localextensions.xml" overwrite="true" />
+
+		<!-- build the platform -->
+		<ant antfile="build.xml" target="all" dir="${hybris.root.path}/bin/platform" />
+
+		<!-- update the system -->
+		<ant antfile="build.xml" target="updatesystem" dir="${hybris.root.path}/bin/platform">
+			<property name="configFile" value="${trainingLabToolDir}/${tlts.source.dir}/config.json" />
+		</ant>
+	</target>
+	<!--###### exercise 10 end ######-->
+
+	<!--###### exercise 11 ######-->
+	<target name="Exercise11_Security-solution" description="copy finished exercise 11" depends="stop-server">
+		<!-- variables -->
+		<property name="tlts.source.dir" value="resources/exercise11/solution/" />
+		<property name="tlts.target.resdir" value="${exercise.projects}/bookstore/bookstorecore/resources/bookstorecore/import" />
+		<property name="tlts.target.javadir" value="${exercise.projects}/bookstore/bookstorecore/src" />
+
+		<!-- copy stuff to targets -->
+		<copy file="${tlts.source.dir}/CoreSystemSetup.java" tofile="${tlts.target.javadir}/my/bookstore/core/setup/CoreSystemSetup.java" overwrite="true" />
+		<copy file="${tlts.source.dir}/projectdataSecurity.impex" tofile="${tlts.target.resdir}/common/projectdataSecurity.impex" overwrite="true" />
+
+		<!-- build the platform -->
+		<ant antfile="build.xml" target="all" dir="${hybris.root.path}/bin/platform" />
+
+		<!-- update the system -->
+		<ant antfile="build.xml" target="updatesystem" dir="${hybris.root.path}/bin/platform">
+			<property name="configFile" value="${trainingLabToolDir}/${tlts.source.dir}/config.json" />
+		</ant>
+	</target>
+	<!--###### exercise 11 end ######-->
+
+</project>

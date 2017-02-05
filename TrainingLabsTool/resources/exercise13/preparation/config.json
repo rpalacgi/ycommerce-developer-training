@@ -1,0 +1,20 @@
+{
+  "init": "Go",
+  "initmethod": "update",
+  "essential": "true",
+  "localizetypes": "true",
+  "droolsruleengineservices_sample": "true",
+  "promotionenginebackoffice_sample": "true",
+  "rulebuilderbackoffice_sample": "true",
+  "promotionenginesamplesaddon_sample": "true",
+  "bookstoreinitialdata_sample": "false",
+  "bookstoreinitialdata_importCoreData": [
+    "no"
+  ],
+  "bookstoreinitialdata_importSampleData": [
+    "yes"
+  ],
+  "bookstoreinitialdata_activateSolrCronJobs": [
+    "no"
+  ]
+}

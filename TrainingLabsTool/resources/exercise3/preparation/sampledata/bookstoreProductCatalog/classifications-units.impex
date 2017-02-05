@@ -1,0 +1,14 @@
+# ImpEx for Importing Units into Telco Store
+
+# Macros / Replacement Parameter definitions
+$systemName=BookstoreClassification;
+$systemVersion=1.0;
+
+
+$classSystemVersion=systemVersion(catalog(id[default=$systemName]),version[default=$systemVersion]);
+
+
+# Insert Classification Units
+INSERT_UPDATE ClassificationAttributeUnit;$classSystemVersion;code[unique=true];unitType;symbol
+;;scheme;String;scheme
+;;pages;Number;pages

@@ -46,6 +46,10 @@ platformhome.properties
 generated-*-web-spring.xml
 wro_addons.xml
 
+# Generated configuration files
+hybris/config/licence/installedSaplicenses.properties
+hybris/config/solr/
+
 # sonar
 .sonar
 

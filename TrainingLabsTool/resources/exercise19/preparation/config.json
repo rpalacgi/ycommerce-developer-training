@@ -1,0 +1,15 @@
+{ 
+  "initmethod": "update",
+  "essential": "false",
+  "localizetypes": "false",
+  "bookstoreinitialdata_sample": "false",
+  "bookstoreinitialdata_importCoreData": [
+    "no"
+  ],
+  "bookstoreinitialdata_importSampleData": [
+    "yes"
+  ],
+  "bookstoreinitialdata_activateSolrCronJobs": [
+    "no"
+  ]
+}

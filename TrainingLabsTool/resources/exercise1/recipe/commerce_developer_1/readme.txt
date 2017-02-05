@@ -1,0 +1,1 @@
+B2C Accelerator with B2C Checkout and Liveedit Addons

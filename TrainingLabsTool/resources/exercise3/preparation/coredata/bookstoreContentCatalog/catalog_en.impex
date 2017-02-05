@@ -1,0 +1,10 @@
+#
+# Import the Content Catalog
+#
+
+$contentCatalog=bookstoreContentCatalog
+$lang=en
+
+# Set Content Catalog name (in English)
+INSERT_UPDATE ContentCatalog;id[unique=true];name[lang=$lang]
+;$contentCatalog;Bookstore Content Catalog

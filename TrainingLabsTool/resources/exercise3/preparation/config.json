@@ -1,0 +1,17 @@
+{
+  "init": "Go",
+  "bookstorecore_sample": "true",
+  "bookstorecore_accessRights": [
+    "yes"
+  ],
+  "bookstoreinitialdata_sample": "false",  
+  "bookstoreinitialdata_importCoreData": [
+    "yes"
+  ],
+  "bookstoreinitialdata_importSampleData": [
+    "yes"
+  ],
+  "bookstoreinitialdata_activateSolrCronJobs": [
+    "yes"
+  ]
+}

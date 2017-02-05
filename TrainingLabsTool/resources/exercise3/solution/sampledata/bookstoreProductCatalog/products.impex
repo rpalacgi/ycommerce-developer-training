@@ -1,0 +1,12 @@
+# ImpEx for Importing Products
+
+$productCatalog=bookstoreProductCatalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$lang=en
+
+# Insert Devices
+INSERT_UPDATE Book;code[unique=true];name[lang=$lang];$supercategories;unit(code)[default=pieces];$approved;$catalogVersion;rentable;rewardPoints;ISBN10;ISBN13;language;publisher
+;8942944779;The Strange Case of the Disappearing hybris Website;mystery,audioCD;;;;true;10;8942944779;3338942944779;$lang;Pinniped

@@ -1,0 +1,29 @@
+$contentCatalog=bookstoreContentCatalog
+$contentCatalogVersion=catalogVersion(catalog(id[default=$contentCatalog]),version[default='Staged'])[unique=true]
+
+# TODO exercise 19.3: Modify the script below
+INSERT_UPDATE BTGConfig[unique=true];defaultTimeUnit(code);usedRuleTypes(code);operandMapping(key(code),value(code))[map-delimiter=|]
+BTGConfig;WEEK;ORDER,CART,USER,WCMS;ORDER->BTGCategoriesInOrdersOperand,BTGEachOrderTotalSumOperand,BTGOrderTotalSumOperand,BTGProductsInOrdersOperand,BTGNumberOfOrdersOperand,BTGNumberOfOrdersRelativeDateOperand,BTGLastOrderDateOperand|CART->BTGCartIsEmptyOperand,BTGCartTotalSumOperand,BTGCategoriesInCartOperand,BTGProductsInCartOperand,BTGQuantityOfProductInCartOperand|WCMS->BTGViewedProductsOperand,BTGViewedCategoriesOperand,BTGVisitedContentpagesOperand,BTGReferalUrlOperand,BTGUrlParameterOperand|USER->BTGUserAddressPostalCodeOperand,BTGUserCountryOperand,BTGUserGenderOperand,BTGUserMemberOfGroupsOperand,BTGCustomerRewardPointsOperand|SCRIPT->BTGMediaScriptOperand,BTGStringScriptOperand
+
+INSERT_UPDATE BTGSegment;uid[unique=true];name;sites(uid);active[default=true];scope(code)[default=ONLINE];$contentCatalogVersion
+;showNextLevelBannerCustomerSegment;Show Next level banner Customer Segment;bookstore
+
+INSERT_UPDATE BTGRule;uid[unique=true];code;segment(uid, $contentCatalogVersion);ruleType(code);$contentCatalogVersion
+;showNextLevelBannerCustomerRule;Show next Level banner is equal true;showNextLevelBannerCustomerSegment;USER
+
+INSERT_UPDATE BTGOperator;uid[unique=true];code;$contentCatalogVersion
+;showNextLevelBannerOperator;boolEquals;
+
+INSERT_UPDATE BTGBooleanLiteralOperand;uid[unique=true];literal;$contentCatalogVersion
+;booleanLiteralOperand;true;;
+
+INSERT_UPDATE BTGCustomerRewardPointsOperand;uid[unique=true];$contentCatalogVersion
+;showNextLevelBannerOperand;;
+
+INSERT_UPDATE BTGExpression;uid[unique=true];leftOperand(uid, $contentCatalogVersion);rightOperand(uid, $contentCatalogVersion);operator(uid, $contentCatalogVersion);rule(uid, $contentCatalogVersion);$contentCatalogVersion
+;showNextLevelBannerExpression;showNextLevelBannerOperand;booleanLiteralOperand;showNextLevelBannerOperator;showNextLevelBannerCustomerRule;;
+ 
+INSERT_UPDATE CmsRestrictionActionDefinition;uid[unique=true];code;target;inverted;segment(uid, $contentCatalogVersion);$contentCatalogVersion;type(code)[default=PLAIN]
+;showNextLevelBannerRestrictionDefinition;showNextLevelBannerRestrictionDefinition;btgDummyAction;false;showNextLevelBannerCustomerSegment;;;
+INSERT_UPDATE BtgSegmentRestriction;uid[unique=true];outputActionDefinition(uid, $contentCatalogVersion);components(uid, $contentCatalogVersion);$contentCatalogVersion
+;showNextLevelBannerRestriction;showNextLevelBannerRestrictionDefinition;BookstoreNextLevelBannerComponent;;

@@ -1,0 +1,9 @@
+# ImpEx for Promotion Engine for Electronics Store
+
+# Language
+$lang=en
+
+############################# PROMOTION RULES ##########################
+INSERT_UPDATE PromotionSourceRule;code[unique=true];name[lang=$lang];description[lang=$lang];messageFired[lang=$lang]
+order_threshold_free_gift;Free book for orders over €100;A free book is added to the cart if the total value of the cart is at least 100 euros;Buy over {d504e38b-2abe-4ff2-a962-02f2eb3b9146} get {4debb80d-8d1c-4ca5-be0d-ab65e7c9b17d} {70b1c6ce-9626-4801-8956-3b51345c2b5c} free
+

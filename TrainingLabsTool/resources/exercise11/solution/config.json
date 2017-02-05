@@ -1,0 +1,9 @@
+{
+  "bookstorecore_sample": "true",
+  "bookstorecore_accessRights": [
+    "no"
+  ],
+  "bookstorecore_verificationScripts": [
+    "no"
+  ]
+}

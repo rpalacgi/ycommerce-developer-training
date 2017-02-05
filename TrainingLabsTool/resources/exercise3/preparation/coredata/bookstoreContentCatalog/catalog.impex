@@ -1,0 +1,26 @@
+#
+# Import the Content Catalog
+#
+
+$contentCatalog=bookstoreContentCatalog
+$languages=en
+$passwordEncoding=pbkdf2
+$defaultPassword=1234
+$setPassword=@password[translator=de.hybris.platform.impex.jalo.translators.ConvertPlaintextToEncodedUserPasswordTranslator][default='$passwordEncoding:$defaultPassword']
+
+# Content catalog for CMS contents
+INSERT_UPDATE ContentCatalog;id[unique=true]
+;$contentCatalog
+
+# Creat the cmsmanagergroup
+INSERT_UPDATE UserGroup;UID[unique=true];groups(uid)[mode=append]
+;cmsmanagergroup;cockpitgroup,employeegroup
+
+# Create the cmsmanager user
+INSERT_UPDATE Employee;UID[unique=true];$setPassword;description;name;groups(uid)[mode=append];sessionLanguage(isocode);sessionCurrency(isocode)
+;cmsmanager;;CMS manager;CMS Manager;cmsmanagergroup;en;USD
+
+# Catalog versions for content catalogs
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;languages(isoCode);writePrincipals(uid)[mode=append];readPrincipals(uid)[mode=append]
+;$contentCatalog;Staged;false;$languages;cmsmanagergroup,cmsmanager;cmsmanagergroup,cmsmanager;
+;$contentCatalog;Online;true;$languages;cmsmanagergroup,cmsmanager;cmsmanagergroup,cmsmanager;
