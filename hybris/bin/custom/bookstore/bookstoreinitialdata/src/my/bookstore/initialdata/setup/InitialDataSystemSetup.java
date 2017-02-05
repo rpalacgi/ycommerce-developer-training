@@ -32,6 +32,7 @@ import java.util.List;
 
 import my.bookstore.initialdata.constants.BookstoreInitialDataConstants;
 
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -73,20 +74,6 @@ public class InitialDataSystemSetup extends AbstractSystemSetup
 		return params;
 	}
 
-	/**
-	 * Implement this method to create initial objects. This method will be called by system creator during
-	 * initialization and system update. Be sure that this method can be called repeatedly.
-	 * 
-	 * @param context
-	 *           the context provides the selected parameters and values
-	 */
-//	@SystemSetup(type = Type.ESSENTIAL, process = Process.ALL)
-//	public void createEssentialData(final SystemSetupContext context)
-//	{
-//		// Add Essential Data here as you require
-//		importImpexFile(context, "/bookstoreinitialdata/import/verifyExercise/verifyExercises.impex");
-//
-//	}
 
 	/**
 	 * Implement this method to create data that is used in your project. This method will be called during the system
@@ -103,7 +90,6 @@ public class InitialDataSystemSetup extends AbstractSystemSetup
 	{
 		//There should be some change
 
-
 		final List<ImportData> importData = new ArrayList<ImportData>();
 
 		final ImportData sampleImportData = new ImportData();
@@ -117,6 +103,9 @@ public class InitialDataSystemSetup extends AbstractSystemSetup
 
 		getSampleDataImportService().execute(this, context, importData);
 		getEventService().publishEvent(new SampleDataImportedEvent(context, importData));
+		
+		//import rentals after catalog sync
+		importImpexFile(context, "/bookstoreinitialdata/import/sampledata/productCatalogs/bookstoreProductCatalog/rentals.impex");
 
 	}
 

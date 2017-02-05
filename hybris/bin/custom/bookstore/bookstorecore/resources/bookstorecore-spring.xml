@@ -446,5 +446,16 @@
 		<constructor-arg
 			value="#{T(my.bookstore.core.model.RewardStatusLevelConfigurationModel). _TYPECODE}" />
 	</bean>
+	
+	<alias alias="rentalDao" name="defaultRentalDao" />
+	<bean id="defaultRentalDao" class="my.bookstore.core.daos.impl.DefaultRentalDao" 
+	      parent="abstractItemDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<!-- TODO exercise 5.1 add bean definition below -->
+	<!-- <bean name="customerDao"> 
+		
+	</bean>-->
 
 </beans>
