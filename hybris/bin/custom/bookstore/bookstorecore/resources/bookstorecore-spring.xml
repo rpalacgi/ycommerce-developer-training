@@ -453,9 +453,11 @@
 		<property name="flexibleSearchService" ref="flexibleSearchService" />
 	</bean>
 
-	<!-- TODO exercise 5.1 add bean definition below -->
-	<!-- <bean name="customerDao"> 
-		
-	</bean>-->
+	<!-- TODO exercise 5.1 -->
+	<bean name="customerDao"
+		class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao">
+		<constructor-arg
+			value="#{T(de.hybris.platform.core.model.user.CustomerModel). _TYPECODE}" />
+	</bean>
 
 </beans>

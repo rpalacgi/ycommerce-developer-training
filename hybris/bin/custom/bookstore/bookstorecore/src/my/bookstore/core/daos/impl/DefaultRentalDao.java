@@ -45,23 +45,42 @@ public class DefaultRentalDao extends AbstractItemDao implements RentalDao {
 		 * Now, your part of the implementation. 
 		 * Use the Flexible Search statement you created in exercise 5.2:
 		 *
-		 * SELECT ...
+		 * SELECT {rental.pk} FROM {Rental as rental} 
+		 *                    WHERE {rental.startDate} <= ?tomorrow" 
+		 *                    AND {rental.endDate} >= ?today 
+		 *                    AND {rental.customer} = ?customer
 		 *
 		 * Now implement it in Java:
 		 */		
 		
 		// TODO exercise 5.3
 
-		final String queryString = "SELECT ...";
-		 
+		/* 
+		 * This is what your implementation might look like:
+		 * 
+		 * final String queryString = "SELECT {rental.pk} FROM {Rental as rental} " + 
+		 *                            "WHERE {rental.startDate} <= ?tomorrow " +
+		 *                            "AND {rental.endDate} >= ?today " +
+		 *                            "AND {rental.customer} = ?customer";
+		 *
+       *
+		 * Remember, though, that we're encouraging you to write your Flexible Search queries 
+		 * using model class constants, to improve code maintenance. So we'll write it like this:
+		 */ 
 		
-		// 1. Compile a query from this string
+		final String queryString = "SELECT {rental.pk}" + " FROM {" + RentalModel._TYPECODE + " as rental}"
+				+ " WHERE {rental." + RentalModel.STARTDATE + "} <= ?tomorrow" + " and {rental." + RentalModel.ENDDATE
+				+ "} >= ?today" + " and {rental." + RentalModel.CUSTOMER + "} = ?customer";
+
+		// 1. Compile a query from this string...
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
 		
-		// 2. Add the query parameters
-		// ...
+		// 2. Add the query parameters...
+		query.addQueryParameter("tomorrow", dayEnd);
+		query.addQueryParameter("today", dayStart);
+		query.addQueryParameter("customer", customer.getPk());
 		
-		// 3. Execute!
+		// 3. Execute
 		return getFlexibleSearchService().<RentalModel> search(query).getResult();
 	}
 
@@ -70,22 +89,40 @@ public class DefaultRentalDao extends AbstractItemDao implements RentalDao {
 		
 		/* Use the Flexible Search statement you created in exercise 5.4:
 		 * 
-		 * SELECT ...
+		 * SELECT pk FROM ({{ SELECT COUNT(*) AS num, {Book.pk} as pk
+		 *                    FROM {Rental JOIN BOOK ON {Rental.product} = {Book.pk}}
+		 *                    GROUP BY {Rental.product}, {Book.pk}
+		 *                    ORDER BY num DESC LIMIT ?limit }})
 		 */
 		
 		// TODO exercise 5.5
+		/*
+		 * This is what your implementation might look like:
+		 * 
+		 * final String queryString = "SELECT pk FROM ({{SELECT COUNT(*) as num, {Book.pk} as pk " +
+		 *                                              "FROM {Rental JOIN Book ON {Rental.product} = {Book.pk}} " +
+		 *                                              "GROUP BY {Rental.product}, {Book.pk} " +
+		 *                                              "ORDER BY num DESC LIMIT ?limit}})";
+		 *
+       *
+		 * Remember, though, that we're encouraging you to write your Flexible Search queries 
+		 * using model class constants, to improve code maintenance. So we'll write it like this:
+		 */ 
 
-		final String queryString = "SELECT ...";
+		final String queryString = "SELECT pk" + " FROM ({{SELECT COUNT(*) AS num, {Book." + BookModel.PK + "} AS pk"
+				+ " FROM {" + RentalModel._TYPECODE + " JOIN " + BookModel._TYPECODE + " ON {Rental."
+				+ RentalModel.PRODUCT + "}={Book." + BookModel.PK + "}}" + " GROUP BY {Rental." + RentalModel.PRODUCT
+				+ "}, {Book." + BookModel.PK + "}" + " ORDER BY num DESC LIMIT ?limit}})";
 
-	      // 1. Compile a query from this string
-			final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
-			
-			// 2. Add the query parameter
-			// ...
-			
-			// 3. Execute
-			final SearchResult<BookModel> books = getFlexibleSearchService().search(query);
-			return books.getResult();
+		// 1. Compile a query from this string
+		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
+		
+		// 2. Add the query parameter
+		query.addQueryParameter("limit", numberOfBooks);
+		
+		// 3. Execute
+		final SearchResult<BookModel> books = getFlexibleSearchService().search(query);
+		return books.getResult();
 	}
 
 }
