@@ -1,0 +1,50 @@
+<hybrisconfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../bin/platform/resources/schemas/extensions.xsd'>
+  <extensions>
+    <path dir='${HYBRIS_BIN_DIR}' autoload='false' />
+    <extension name='admincockpit' />
+    <extension name='backoffice' />
+    <extension name='cockpit' />
+    <extension name='hmc' />
+    <extension name='mcc' />
+    <extension name='platformhmc' />
+    <extension name='platformbackoffice' />
+    <extension name='bmecat' />
+    <extension name='bmecathmc' />
+    <extension name='btg' />
+    <extension name='btgcockpit' />
+    <extension name='commercesearch' />
+    <extension name='commercesearchhmc' />
+    <extension name='commerceservices' />
+    <extension name='basecommerce' />
+    <extension name='payment' />
+    <extension name='promotions' />
+    <extension name='voucher' />
+    <extension name='customerreview' />
+    <extension name='ticketsystem' />
+    <extension name='solrserver' />
+    <extension name='solrfacetsearch' />
+    <extension name='solrfacetsearchhmc' />
+    <extension name='oci' />
+    <extension name='wishlist' />
+    <extension name='commercefacades' />
+    <extension name='commerceservicesbackoffice' />
+    <extension name='addonsupport' />
+    <extension name='liveeditaddon' />
+    <extension name='acceleratorwebservicesaddon' />
+    <extension name='productcockpit' />
+    <extension name='cms2' />
+    <extension name='cms2lib' />
+    <extension name='cmscockpit' />
+    <extension name='importcockpit' />
+    <extension name='classificationsystems' />
+    <extension name='classificationsystemshmc' />
+    <extension name='cscockpit' />
+    <extension name='acceleratorservices' />
+    <extension name='acceleratorfacades' />
+    <extension name='acceleratorcms' />
+    <extension name='acceleratorstorefrontcommons' />
+    <extension name='yacceleratorstorefront' />
+    <extension name='ycommercewebservices' />
+    <extension name='springintegrationlibs' />
+  </extensions>
+</hybrisconfig>
