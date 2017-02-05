@@ -2,12 +2,13 @@
 <!--
  [y] hybris Platform
 
- Copyright (c) 2017 SAP SE or an SAP affiliate company.  All rights reserved.
+ Copyright (c) 2000-2015 hybris AG
+ All rights reserved.
 
- This software is the confidential and proprietary information of SAP
+ This software is the confidential and proprietary information of hybris
  ("Confidential Information"). You shall not disclose such Confidential
  Information and shall use it only in accordance with the terms of the
- license agreement you entered into with SAP.
+ license agreement you entered into with hybris.
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -300,7 +301,7 @@
 	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
 		<property name="resource" value="classpath:/bookstorecore/processes/sendNotPickedUpConsignmentCanceledEmailProcess.xml"/>
 	</bean>
-	
+
 	<!-- Actions -->
 	<bean id="abstractAction" class="de.hybris.platform.processengine.action.AbstractAction"
 	      abstract="true">
@@ -434,53 +435,16 @@
 		<property name="commerceCategoryService" ref="commerceCategoryService"/>
 		<property name="rootCategoryCode" value="categories"/>
 	</bean>
-
-	<!-- Sales quote process actions -->
-
-	<!-- quote-->
-	<bean id="quoteBuyerSubmitEventListener" class="my.bookstore.core.event.QuoteBuyerSubmitEventListener"
-		  parent="abstractEventListener">
-		<property name="modelService" ref="modelService"/>
-		<property name="businessProcessService" ref="businessProcessService"/>
-	</bean>
-
-	<bean id="quoteSalesRepSubmitEventListener" class="my.bookstore.core.event.QuoteSalesRepSubmitEventListener"
-		  parent="abstractEventListener">
-		<property name="modelService" ref="modelService"/>
-		<property name="businessProcessService" ref="businessProcessService"/>
-	</bean>
-
-	<bean id="quoteSellerApprovalSubmitEventListener" class="my.bookstore.core.event.QuoteSellerApprovalSubmitEventListener"
-		  parent="abstractEventListener">
-		<property name="modelService" ref="modelService"/>
-		<property name="businessProcessService" ref="businessProcessService"/>
-	</bean>
-
-	<bean id="quoteBuyerOrderPlacedEventListener" class="my.bookstore.core.event.QuoteBuyerOrderPlacedEventListener"
-		  parent="abstractEventListener">
-		<property name="commerceQuoteService" ref="commerceQuoteService"/>
-		<property name="modelService" ref="modelService"/>
-	</bean>
-
-
-	<bean id="quoteBuyerProcessDefinitionResource"
-		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
-		<property name="resource" value="classpath:/bookstorecore/processes/quote/quote-buyer-process.xml"/>
-	</bean>
-
-	<bean id="quoteSalesRepProcessDefinitionResource"
-		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
-		<property name="resource" value="classpath:/bookstorecore/processes/quote/quote-salesrep-process.xml"/>
-	</bean>
-
-
-	<bean id="quoteSellerApprovalProcessDefinitionResource"
-		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
-		<property name="resource" value="classpath:/bookstorecore/processes/quote/quote-seller-approval-process.xml"/>
-	</bean>
-
-	<import resource="/bookstorecore/processes/quote/quote-buyer-process-spring.xml"/>
-	<import resource="/bookstorecore/processes/quote/quote-salesrep-process-spring.xml"/>
-	<import resource="/bookstorecore/processes/quote/quote-seller-approval-process-spring.xml"/>
 	
+	<!-- bookstore specific configuration -->
+	
+		<bean name="pointsToNextLevelAttrHandler" 
+		      class="my.bookstore.core.attributehandlers.PointsToNextLevelAttrHandler" />
+
+	<bean name="rewardStatusLevelConfigurationDao"
+		class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao">
+		<constructor-arg
+			value="#{T(my.bookstore.core.model.RewardStatusLevelConfigurationModel). _TYPECODE}" />
+	</bean>
+
 </beans>
