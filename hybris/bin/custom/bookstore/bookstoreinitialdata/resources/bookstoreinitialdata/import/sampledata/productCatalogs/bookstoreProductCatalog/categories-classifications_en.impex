@@ -17,6 +17,17 @@ UPDATE ClassificationClass;code[unique=true];$classCatalogVersion;name[lang=$lan
 ;digitalclassification;;Digital Classification
 
 # Insert Classification Attributes
-UPDATE ClassificationAttribute;code[unique=true];$classSystemVersion;name[lang=$lang]
-;DRM;;DRM
-;pages;;Pages
+UPDATE ClassificationAttribute;code[unique=true];name[lang=$lang];$classSystemVersion
+;DRM;DRM
+;pages;Pages
+;filesize;File Size
+;deliveryFormat;Delivery Format
+;length;Length
+
+# Insert Classification Units
+#INSERT_UPDATE ClassificationAttributeUnit;code[unique=true];name;symbol;$classSystemVersion
+#;scheme;Scheme;scheme
+#;pages;Pages;pages
+#;MB;Megabytes;MB
+#;duration;Duration;HH:mm:ss
+#;format;Format;format

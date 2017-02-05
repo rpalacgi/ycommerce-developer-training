@@ -13,5 +13,8 @@ $sysVer=systemVersion(catalog(id[default=$systemName]),version[default=$systemVe
 $lang=en
 
 UPDATE ClassificationAttributeUnit;code[unique=true];name[lang=$lang];$sysVer
+;MB;Megabyte
 ;scheme;Scheme
 ;pages;Pages
+;duration;Duration
+;format;Format

@@ -5,10 +5,15 @@ $systemName=BookstoreClassification;
 $systemVersion=1.0;
 
 
-$classSystemVersion=systemVersion(catalog(id[default=$systemName]),version[default=$systemVersion]);
+$sysVer=systemVersion(catalog(id[default='$systemName']),version[default='$systemVersion'])
 
 
-# Insert Classification Units
-INSERT_UPDATE ClassificationAttributeUnit;$classSystemVersion;code[unique=true];unitType;symbol
-;;scheme;String;scheme
-;;pages;Number;pages
+
+INSERT_UPDATE ClassificationAttributeUnit;code[unique=true];unitType;symbol;conversionFactor[default=1];$sysVer[unique=true]
+;MB;Number;MB
+;scheme;String;scheme
+;pages;Number;pages
+;duration;String;"HH:mm:ss"
+;format;String;format
+
+

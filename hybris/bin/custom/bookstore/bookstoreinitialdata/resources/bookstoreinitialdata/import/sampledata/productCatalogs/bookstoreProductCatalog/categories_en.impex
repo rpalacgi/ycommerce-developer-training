@@ -14,6 +14,7 @@ UPDATE Category;code[unique=true];$catalogVersion;name[lang=$lang]
 ;fiction;;Fiction
 ;crime;;Crime
 ;horror;;Horror
+;mystery;;Mystery
 ;romance;;Romance
 ;sciencefiction;;Science-Fiction
 ;western;;Western
@@ -32,3 +33,4 @@ UPDATE Category;code[unique=true];$catalogVersion;name[lang=$lang]
 ;history;;History
 ;philosophy;;Philosophy
 ;self-help;;Self-Help
+;audioCD;;Audio CD
