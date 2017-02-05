@@ -43,8 +43,15 @@
     <extension name='acceleratorfacades' />
     <extension name='acceleratorcms' />
     <extension name='acceleratorstorefrontcommons' />
-    <extension name='yacceleratorstorefront' />
     <extension name='ycommercewebservices' />
     <extension name='springintegrationlibs' />
+
+    <!--bookstore extensions -->
+    <extension name="bookstorefulfilmentprocess"/>
+    <extension name="bookstorecore"/>
+    <extension name="bookstoreinitialdata"/>
+    <extension name="bookstorefacades"/>
+    <extension name="bookstorecockpits"/>
+    <extension name="bookstorestorefront"/>
   </extensions>
 </hybrisconfig>
