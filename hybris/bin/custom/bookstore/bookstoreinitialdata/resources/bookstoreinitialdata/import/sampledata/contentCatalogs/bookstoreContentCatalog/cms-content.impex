@@ -188,6 +188,7 @@ INSERT_UPDATE PurchasedCategorySuggestionComponent;$contentCV[unique=true];uid[u
 INSERT_UPDATE SearchBoxComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
 ;;SearchBox;Search Box;SearchBox
 
+
 INSERT_UPDATE CMSProductListComponent;$contentCV[unique=true];uid[unique=true];name;actions(uid,$contentCV);&componentRef
 ;;ProductListComponent;Product List Component;ListAddToCartAction;ProductListComponent
 
@@ -208,9 +209,10 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents
 ;;MiniCartSlot;MiniCart
 ;;NavigationBarSlot;NavBarComponent
 ;;FooterSlot;FooterComponent
-;;HeaderLinksSlot;ContactInfo
+#;;HeaderLinksSlot;ContactInfo
 ;;SearchBoxSlot;SearchBox
 ;;AddToCartSlot;AddToCart
+
 
 
 # CMS Navigation Nodes #
@@ -218,9 +220,12 @@ INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;ch
 ;root;;root;;
 
 
+
+
+
+
 UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];linkComponents(&linkRef);;;;;
 ;;login;LoginLink
-
 
 
 
@@ -231,7 +236,7 @@ INSERT_UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];
 ;;NewBookstoreHomepageProductCarouselComponent;Bookstore Homepage Product Carousel;9439522259,8685677009,8679478989,8423207609,7313785739,6265644009,6493374189,6824238759,5650539359,5536152009,4729720539;allVisible;false;NewBookstoreHomepageProductCarouselComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
-;;Section1Slot-Homepage;Section1 Slot for Homepage;true;NewBookstoreHomepageProductCarouselComponent
+;;Section1Slot-Homepage;Section1 Slot for Homepage;true;
 ;;Section2ASlot-Homepage;Section2A Slot for Homepage;true;
 ;;Section2BSlot-Homepage;Section2B Slot for Homepage;true;
 ;;Section2CSlot-Homepage;Section2C Slot for Homepage;true;
@@ -469,15 +474,8 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ;;RightContentSlot-checkout-login;RightContentSlot;;RightContentSlot-checkout-login;;;
 
 
-# TODO exercise 9.2: Update ContentPage homepage
-# set linkComponents(&linkRef):HomepageNavLink
-# Look above for a similar update.
-
 UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];linkComponents(&linkRef)
 ;;homepage;HomepageNavLink
-
-
-# TODO exercise 9.3: Extend the script below
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true]
 ;;Section1-Homepage;Section1;;Section1Slot-Homepage
@@ -487,3 +485,14 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ;;Section3-Homepage;Section3;;Section3Slot-Homepage
 ;;Section4-Homepage;Section4;;Section4Slot-Homepage
 ;;Section5-Homepage;Section5;;Section5Slot-Homepage
+
+
+## TODO exercise 10.3: Use the following headers to define your component and its connection
+
+INSERT_UPDATE ProductRefinementComponent; $contentCV[unique=true] ; uid[unique=true] ; name ; &componentRef
+
+
+INSERT_UPDATE ContentSlot; $contentCV[unique=true] ; uid[unique=true] ; name ; active ; cmsComponents(&componentRef)
+
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique=true] ; uid[unique=true] ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
