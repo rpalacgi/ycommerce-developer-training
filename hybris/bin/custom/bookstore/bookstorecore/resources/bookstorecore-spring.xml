@@ -457,21 +457,22 @@
 		<constructor-arg
 			value="#{T(de.hybris.platform.core.model.user.CustomerModel). _TYPECODE}" />
 	</bean>
-
+	
 	<!-- TODO exercise 6.1 -->
 	<!-- TODO exercise 6.2 -->
 	<!-- Uncomment the code below and add your implementation -->
-<!--  
 	<alias alias="bookstoreCustomerAccountService" name="defaultBookstoreCustomerAccountService" />
 	<bean id="defaultBookstoreCustomerAccountService"
-		class="my.bookstore.core.services.impl.DefaultBookstoreCustomerAccountService">
-		
+		class="my.bookstore.core.services.impl.DefaultBookstoreCustomerAccountService"
+		parent="defaultCustomerAccountService">
+		<property name="customerDao" ref="customerDao"/>
 	</bean>
--->
-
+	
 	<alias alias="rentalService" name="defaultRentalService" />
-	<bean id="defaultRentalService" class="my.bookstore.core.services.impl.DefaultRentalService">
+	<bean id="defaultRentalService"
+		class="my.bookstore.core.services.impl.DefaultRentalService">
 		<!-- TODO exercise 6.3: add necessary properties -->
+		<property name="rentalDao" ref="rentalDao" />
 	</bean>
-
+	
 </beans>

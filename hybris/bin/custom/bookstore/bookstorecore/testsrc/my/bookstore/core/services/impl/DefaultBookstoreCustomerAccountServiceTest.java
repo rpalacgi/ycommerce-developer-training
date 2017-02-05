@@ -39,7 +39,7 @@ import my.bookstore.core.model.BookModel;
  * The following class supports a Tesd-Driven-Development (TDD) approach
  * for the SAP Hybris Commerce Developer training, part 1.
  *
- * It tests the UpdateRewardStatusPoints() and getAllCustomersForLevel()
+ * It tests the updateRewardStatusPoints() and getAllCustomersForLevel()
  * methods of the DefaultBookstoreCustomerAccountService class.
  *
  */
@@ -95,14 +95,13 @@ public class DefaultBookstoreCustomerAccountServiceTest extends ServicelayerTran
 	      TODO exercise 6.2: Pass in an order and check that the customer's points are updated by the total
 		                      points of the books in the order (and accounting for the quantity of each book).
 		*/
-		// 1. Call UpdateRewardStatusPoints() method		
-      
-      //...
+		// 1. Call updateRewardStatusPoints() method	
+		defaultBookstoreCustomerAccountService.updateRewardStatusPoints(customer, order);
 
 		// 2. Make sure the customer's point total is the sum of the books in the order
-      
-      //...
-      
+      if (customer.getPoints() == 55)
+			fail("Customer was not awarded the correct number of points -- Remember: there are 2 copies of book 2 in the order!");
+		else if (customer.getPoints() != 70)
 			fail("Customer was not awarded the correct number of points");
 	}
 
@@ -132,11 +131,13 @@ public class DefaultBookstoreCustomerAccountServiceTest extends ServicelayerTran
 		*/                    
 		
 		// 1. Call getAllCustomersForLevel() method		
-		//...
+		List<CustomerModel> goldCustomers = defaultBookstoreCustomerAccountService.getAllCustomersForLevel(gold);
 
 		// 2. Compare the UIDs of the returned customers with the goldCustomerIds list
-		//...
-      
+      List<String> returnedIds = new ArrayList<String>();
+      for (CustomerModel goldCustomer : goldCustomers)
+      	returnedIds.add(goldCustomer.getUid());
+      if (!goldCustomerIds.containsAll(returnedIds))
       	fail("The getAllCustomersForLevel did not return the correct number of customers.");
 	}
 
@@ -159,7 +160,7 @@ public class DefaultBookstoreCustomerAccountServiceTest extends ServicelayerTran
 	/**
     * initializeOrder
     * 
-    *    Create the objects necessary to test the UpdateRewardStatusPoints() method.
+    *    Create the objects necessary to test the updateRewardStatusPoints() method.
     *    
     *    - Customer
     *    - Order
