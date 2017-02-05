@@ -218,6 +218,10 @@ INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;ch
 ;root;;root;;
 
 
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];linkComponents(&linkRef);;;;;
+;;login;LoginLink
+
+
 
 
 ###### Bookstore Homepage ######
@@ -227,7 +231,7 @@ INSERT_UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];
 ;;NewBookstoreHomepageProductCarouselComponent;Bookstore Homepage Product Carousel;9439522259,8685677009,8679478989,8423207609,7313785739,6265644009,6493374189,6824238759,5650539359,5536152009,4729720539;allVisible;false;NewBookstoreHomepageProductCarouselComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
-;;Section1Slot-Homepage;Section1 Slot for Homepage;true;
+;;Section1Slot-Homepage;Section1 Slot for Homepage;true;NewBookstoreHomepageProductCarouselComponent
 ;;Section2ASlot-Homepage;Section2A Slot for Homepage;true;
 ;;Section2BSlot-Homepage;Section2B Slot for Homepage;true;
 ;;Section2CSlot-Homepage;Section2C Slot for Homepage;true;
@@ -464,18 +468,19 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ;;CenterContentSlot-checkout-login;CenterContentSlot;;CenterContentSlot-checkout-login;;;
 ;;RightContentSlot-checkout-login;RightContentSlot;;RightContentSlot-checkout-login;;;
 
-### Assign Navigation Links
-
-UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];linkComponents(&linkRef)
-;;login;LoginLink
 
 # TODO exercise 9.2: Update ContentPage homepage
+# set linkComponents(&linkRef):HomepageNavLink
+# Look above for a similar update.
 
-UPDATE ContentPage;....
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];linkComponents(&linkRef)
+;;homepage;HomepageNavLink
+
 
 # TODO exercise 9.3: Extend the script below
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true]
+;;Section1-Homepage;Section1;;Section1Slot-Homepage
 ;;Section2A-Homepage;Section2A;;Section2ASlot-Homepage
 ;;Section2B-Homepage;Section2B;;Section2BSlot-Homepage
 ;;Section2C-Homepage;Section2C;;Section2CSlot-Homepage
