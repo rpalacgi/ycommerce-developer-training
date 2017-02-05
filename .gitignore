@@ -1,0 +1,55 @@
+# hybris top-level folders
+hybris/bin/*
+!hybris/bin/custom
+hybris/data
+hybris/log
+hybris/temp
+
+# hybris bundle files
+build-tools
+c4c-integration
+hybris-ems
+installer
+licenses
+README
+
+# Installed add-ons
+hybris/bin/custom/**/web/addonsrc/**
+hybris/bin/custom/**/web/commonwebsrc/**
+hybris/bin/custom/**/web/webroot/WEB-INF/**/addons/**
+hybris/bin/custom/**/web/webroot/_ui/addons/**
+hybris/bin/custom/**/web/webroot/cmscockpit
+hybris/bin/custom/**/web/webroot/cockpit
+hybris/bin/custom/**/web/webroot/cscockpit
+hybris/bin/custom/**/web/webroot/productcockpit
+
+# hMC aggregated files
+hybris/bin/ext-platform/hmc/web/webroot/ext
+
+# hybris output folders 
+classes
+eclipsebin
+gensrc
+testclasses
+target
+
+# copied/generated files
+ruleset.xml
+beans.xsd
+build.xml
+extensioninfo.xsd
+hmc.xsd
+items.xsd
+platformhome.properties
+*-testclasses.xml
+*-webtestclasses.xml
+generated-*-web-spring.xml
+wro_addons.xml
+
+# sonar
+.sonar
+
+# training files
+.metadata
+!installer/recipes/commerce_developer_1 
+RemoteSystemsTempFiles
