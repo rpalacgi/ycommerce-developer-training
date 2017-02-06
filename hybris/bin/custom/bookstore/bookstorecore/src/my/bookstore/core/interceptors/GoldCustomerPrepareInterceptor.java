@@ -1,6 +1,3 @@
-/**
- * 
- */
 package my.bookstore.core.interceptors;
 
 import de.hybris.platform.core.model.security.PrincipalGroupModel;
@@ -18,7 +15,7 @@ import my.bookstore.core.enums.RewardStatusLevel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class GoldCustomerPrepareInterceptor //TODO exercise 12.2: implement interface
+public class GoldCustomerPrepareInterceptor implements PrepareInterceptor<CustomerModel>
 {
 
 	private static final String GOLD_CUSTOMER = "goldcustomergroup";
@@ -31,10 +28,9 @@ public class GoldCustomerPrepareInterceptor //TODO exercise 12.2: implement inte
 	 * @see de.hybris.platform.servicelayer.interceptor.PrepareInterceptor#onPrepare(java.lang.Object,
 	 * de.hybris.platform.servicelayer.interceptor.InterceptorContext)
 	 */
-	
-	
+		
 	/* TODO exercise 12.2: comment out @Override annotation and  have a look at implementation of onPrepare method*/
-	//@Override
+	@Override
 	public void onPrepare(final CustomerModel model, final InterceptorContext ctx) throws InterceptorException
 	{
 		final UserGroupModel goldCustomerGroup = userGroupDao.findUserGroupByUid(GOLD_CUSTOMER);

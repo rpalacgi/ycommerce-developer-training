@@ -90,30 +90,37 @@ public class GoldCustomerPrepareInterceptorTest extends ServicelayerTransactiona
 				
 		if (goldCustomerPrepareInterceptor == null)
 			fail("Could not resolve the bean goldCustomerPrepareInterceptor");
-		//try {
-			// 0. Uncomment try and catch blocks!
-			
+		try {
 			// 1. Call the prepare interceptor on the blue customer. 
 			//    Test that it is NOT assigned to the goldCustomerGroup
-         //...
+		   goldCustomerPrepareInterceptor.onPrepare(blueCustomer, null);	   
+		   if (blueCustomer.getGroups().contains(goldCustomerGroup))
+		   	fail("goldCustomerGroup incorrectly assigned to a blue customer.");
 		   
 			// 2. Call the prepare interceptor on the silver customer. 
 			//    Test that it is NOT assigned to the goldCustomerGroup
-         //... 
+		   goldCustomerPrepareInterceptor.onPrepare(silverCustomer, null);	   
+		   if (silverCustomer.getGroups().contains(goldCustomerGroup))
+		   	fail("goldCustomerGroup incorrectly assigned to a silver customer.");
 		   
 			// 3. Call the prepare interceptor on the gold customer. 
 			//    Test that it IS assigned to the goldCustomerGroup
-         //... 
+		   goldCustomerPrepareInterceptor.onPrepare(goldCustomer, null);		   
+		   if (! goldCustomer.getGroups().contains(goldCustomerGroup))
+		   	fail("goldCustomerGroup was not assigned to a deserving gold customer.");
 		   
 			// 4. Demote the gold customer to either silver or blue.
 		   //    Call the prepare interceptor on the demoted gold customer. 
 			//    Test that it NO LONGER belongs to the goldCustomerGroup
-         //... 
+	      goldCustomer.setRewardStatusLevel(silver);
+		   goldCustomerPrepareInterceptor.onPrepare(goldCustomer, null);		   
+		   if (goldCustomer.getGroups().contains(goldCustomerGroup))
+		   	fail("goldCustomerGroup was not removed from a gold customer reassigned to silver.");
 		   
-		//}
-		//catch (InterceptorException e) {
-			//fail("Exception thrown by goldCustomerPrepareInterceptor: " + e.getMessage());
-		//}
+		}
+		catch (Exception e) {
+			fail("Exception thrown by goldCustomerPrepareInterceptor: " + e.getMessage());
+		}
 		
 		
 	}
