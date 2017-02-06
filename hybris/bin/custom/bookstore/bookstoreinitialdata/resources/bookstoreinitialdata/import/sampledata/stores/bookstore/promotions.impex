@@ -84,3 +84,14 @@ INSERT_UPDATE PromotionSourceRuleTemplate;code[unique=true];maxAllowedRuns;ruleG
 ;target_customer_percentage_discount_cart;1;customerPromotionRuleGroup;"[{""definitionId"":""y_target_customers"",""parameters"":{""customer_groups"":{""uuid"":""bc52ebe5-e161-4945-bf1b-ecd29d3fc357"",""type"":""List(ItemType(UserGroup))"",""value"":[]},""customer_groups_operator"":{""uuid"":""e7637460-ef7e-4bbf-a999-e3191315c244"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""customers"":{""uuid"":""e5892d9a-fe02-4701-bb65-b6e1ea67ef4a"",""type"":""List(ItemType(Customer))"",""value"":[]},""excluded_customers"":{""uuid"":""6d06b559-cdb5-43af-94ac-cff35bf1e92c"",""type"":""List(ItemType(Customer))"",""value"":[]},""excluded_customer_groups"":{""uuid"":""85a08e42-744c-4a4c-93af-0359c89708d8"",""type"":""List(ItemType(UserGroup))"",""value"":[]}},""children"":[]}]";"[{""definitionId"":""y_order_percentage_discount"",""parameters"":{""value"":{""uuid"":""7a5bec37-9ab2-4452-beb4-6496f948fa83"",""type"":""java.math.BigDecimal""}}}]"
 
 
+# Promotions
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;stackable[default=false];ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp]
+;freebook01;500;1;true;orderPromotionRuleGroup;"[{""definitionId"":""y_cart_total"",""parameters"":{""value"":{""uuid"":""d504e38b-2abe-4ff2-a962-02f2eb3b9146"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""EUR"":100}},""operator"":{""uuid"":""0cc4f793-b83d-4e5b-990a-1b8207bd8ff9"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_free_gift"",""parameters"":{""product"":{""uuid"":""70b1c6ce-9626-4801-8956-3b51345c2b5c"",""type"":""ItemType(Product)"",""value"":""6265644009""},""quantity"":{""uuid"":""4debb80d-8d1c-4ca5-be0d-ab65e7c9b17d"",""type"":""java.lang.Integer"",""value"":1}}}]"
+
+
+# Vouchers
+INSERT_UPDATE SerialVoucher;code[unique=true];name[lang=en]     ;description[lang=en]         ;freeShipping;priority;value;currency(isocode)
+						   ;sv1              ;Drama Week Voucher;Enjoy drama with our vouchers;false       ;1000    ;10   ;$defaultCurrency 
+
+INSERT_UPDATE ProductCategoryRestriction;$restrictedCategories[unique=true];positive[unique=true];voucher(code)[unique=true]
+										;drama                             ;true                 ;sv1
