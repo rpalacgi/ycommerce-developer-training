@@ -30,8 +30,6 @@
 		<extension name="commerceservices" />
 		<extension name="basecommerce" />
 		<extension name="payment" />
-		<extension name="promotions" />
-		<extension name="voucher" />
 		<extension name="customerreview" />
 		<extension name="ticketsystem" />
 		<extension name="solrserver" />
@@ -79,7 +77,10 @@
 		<extension name="solrfacetsearchbackoffice" />
 		<!-- TODO exercise 10.4: add commercesearchbackoffice here! -->
 		<extension name="commercesearchbackoffice" />
-
-
+		
+		<extension name="rulebuilderbackoffice" />
+        <extension name="promotionenginebackoffice" />
+        <extension name="droolsruleengineservices" />
+		<extension name="promotionenginesamplesaddon" />
 	</extensions>
 </hybrisconfig>
