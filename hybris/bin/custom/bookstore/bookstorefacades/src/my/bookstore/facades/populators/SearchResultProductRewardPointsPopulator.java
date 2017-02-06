@@ -29,7 +29,9 @@ public class SearchResultProductRewardPointsPopulator implements Populator<Searc
 		Assert.notNull(source, "Parameter source cannot be null.");
 		Assert.notNull(target, "Parameter target cannot be null.");
 		/*
-		TODO exercise 10.1
+		TODO exercise 10.1: Add the lines of code that will pass rewardPoints to a ProductData instance.
 		*/
+		final Integer rewardPoints = (Integer) source.getValues().get("rewardPoints");
+		target.setRewardPoints(rewardPoints == null ? Integer.valueOf(0) : rewardPoints);
 	}
 }

@@ -6,7 +6,6 @@
 			loaded. More information about how to configure available extensions can 
 			be found here : https://wiki.hybris.com/x/nZVzC -->
 
-
 		<path dir="${HYBRIS_BIN_DIR}" />
 
 
@@ -19,6 +18,7 @@
 		<extension name="mcc" />
 		<extension name="platformhmc" />
 		<extension name="platformbackoffice" />
+
 
 		<!-- ext-commerce -->
 		<extension name='bmecat' />
@@ -77,7 +77,9 @@
 		<extension name="springintegrationlibs" />
 
 		<extension name="solrfacetsearchbackoffice" />
-		<!-- TODO exercise 10.4 add commercesearchbackoffice here! <extension .../> -->
+		<!-- TODO exercise 10.4: add commercesearchbackoffice here! -->
+		<extension name="commercesearchbackoffice" />
+
 
 	</extensions>
 </hybrisconfig>

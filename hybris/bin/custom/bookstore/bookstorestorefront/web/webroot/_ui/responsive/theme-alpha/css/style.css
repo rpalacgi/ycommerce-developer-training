@@ -10611,7 +10611,7 @@ fieldset[disabled] .btn-primary.active {
   bottom: 0;
   position: absolute;
   right: 0;
-  content: "???";
+  content: "…";
 }
 .carousel .item .item__name:after,
 .carousel__component--carousel .item .item__name:after,
