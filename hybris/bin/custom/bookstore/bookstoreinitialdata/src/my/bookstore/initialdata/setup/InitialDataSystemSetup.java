@@ -88,6 +88,8 @@ public class InitialDataSystemSetup extends AbstractSystemSetup
 		importImpexFile(
 				context,
 				"/bookstoreinitialdata/import/sampledata/productCatalogs/bookstoreProductCatalog/pricegroups.impex");
+		//Exercise 17
+		importImpexFile(context, "/bookstoreinitialdata/import/sampledata/stores/bookstore/approval-workflow.impex");
 
 		final List<ImportData> importData = new ArrayList<ImportData>();
 
