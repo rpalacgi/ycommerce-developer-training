@@ -17,6 +17,7 @@
 		<requires-extension name="acceleratorcms"/>
 		<requires-extension name="acceleratorfacades"/>
 		<requires-extension name="solrserver"/>
+		<requires-extension name="bookstorefulfilmentprocess"/>
 
 		<coremodule generated="true" manager="my.bookstore.core.jalo.BookstoreCoreManager" packageroot="my.bookstore.core"/>
 
