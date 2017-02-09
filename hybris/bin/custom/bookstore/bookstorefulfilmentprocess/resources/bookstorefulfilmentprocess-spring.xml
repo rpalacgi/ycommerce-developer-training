@@ -2,12 +2,13 @@
 <!--
  [y] hybris Platform
 
- Copyright (c) 2017 SAP SE or an SAP affiliate company.  All rights reserved.
+ Copyright (c) 2000-2015 hybris AG
+ All rights reserved.
 
- This software is the confidential and proprietary information of SAP
+ This software is the confidential and proprietary information of hybris
  ("Confidential Information"). You shall not disclose such Confidential
  Information and shall use it only in accordance with the terms of the
- license agreement you entered into with SAP.
+ license agreement you entered into with hybris.
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -58,15 +59,11 @@
 		<property name="resource" value="classpath:/bookstorefulfilmentprocess/process/consignment-process.xml"/>
 	</bean>
 
-	<bean id="returnProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
-		<property name="resource" value="classpath:/bookstorefulfilmentprocess/process/return-process.xml"/>
-	</bean>
-
 	<!-- Process Actions -->
 
 	<import resource="/bookstorefulfilmentprocess/process/order-process-spring.xml"/>
 	<import resource="/bookstorefulfilmentprocess/process/consignment-process-spring.xml"/>
-	<import resource="/bookstorefulfilmentprocess/process/return-process-spring.xml"/>
+
 
 	<!-- Order Check Service -->
 	<!-- Performs some basic validation for the order as part of the first stage of the process. -->
@@ -108,10 +105,7 @@
 	</bean>
 	
 	<alias name="defaultSplitByWarehouse" alias="splitByWarehouse"/>
-	<bean id="defaultSplitByWarehouse" class="my.bookstore.fulfilmentprocess.strategy.impl.SplitByWarehouse">
-		<property name="stockService" ref="stockService"/>
-		<property name="commerceAvailabilityCalculationStrategy" ref="commerceStockLevelCalculationStrategy"/>
-	</bean>
+	<bean id="defaultSplitByWarehouse" class="my.bookstore.fulfilmentprocess.strategy.impl.SplitByWarehouse" />
 	
 	<!--  Jobs -->
 	
@@ -122,4 +116,5 @@
 		<property name="sessionService" ref="sessionService"/>
 	</bean>
 
+	
 </beans>
