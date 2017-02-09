@@ -11,8 +11,7 @@ import de.hybris.platform.task.RetryLaterException;
 import my.bookstore.fulfilmentprocess.events.CustomerUpdateEvent;
 
 
-// TODO exercise 15.1: extend the class and then override its executeAction method!
-public class UpdateCustomerPointsAction 
+public class UpdateCustomerPointsAction extends AbstractProceduralAction<OrderProcessModel>
 {
 
 	private EventService eventService;
@@ -26,4 +25,16 @@ public class UpdateCustomerPointsAction
 		this.eventService = eventService;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * de.hybris.platform.processengine.action.AbstractProceduralAction#executeAction(de.hybris.platform.processengine
+	 * .model.BusinessProcessModel)
+	 */
+	@Override
+	public void executeAction(final OrderProcessModel process) throws RetryLaterException, Exception
+	{
+		eventService.publishEvent(new CustomerUpdateEvent(process));
+	}
 }

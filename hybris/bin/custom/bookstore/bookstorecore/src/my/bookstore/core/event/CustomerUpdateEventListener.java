@@ -8,7 +8,6 @@ import my.bookstore.core.services.BookstoreCustomerAccountService;
 import my.bookstore.fulfilmentprocess.events.CustomerUpdateEvent;
 
 
-
 public class CustomerUpdateEventListener extends AbstractSiteEventListener<CustomerUpdateEvent>
 {
 
@@ -27,7 +26,7 @@ public class CustomerUpdateEventListener extends AbstractSiteEventListener<Custo
 	protected void onSiteEvent(final CustomerUpdateEvent event)
 	{
 		// TODO exercise 15.2: write the implementation as explained in the instructions.
-		
+		bookstoreCustomerService.updateRewardStatusPoints(event.getCustomer(), event.getOrder());
 	}
 
 	/*
