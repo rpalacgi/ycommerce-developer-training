@@ -19,7 +19,6 @@
 		<extension name="platformhmc" />
 		<extension name="platformbackoffice" />
 
-
 		<!-- ext-commerce -->
 		<extension name='bmecat' />
 		<extension name='bmecathmc' />
@@ -30,6 +29,8 @@
 		<extension name="commerceservices" />
 		<extension name="basecommerce" />
 		<extension name="payment" />
+		<extension name="promotions" />
+		<extension name="voucher" />
 		<extension name="customerreview" />
 		<extension name="ticketsystem" />
 		<extension name="solrserver" />
@@ -39,7 +40,7 @@
 		<extension name="wishlist" />
 		<extension name="commercefacades" />
 		<extension name="commerceservicesbackoffice" />
-
+		
 		<extension name="addonsupport" />
 		<extension name="liveeditaddon" />
 		<extension name="acceleratorwebservicesaddon" />
@@ -75,12 +76,16 @@
 		<extension name="springintegrationlibs" />
 
 		<extension name="solrfacetsearchbackoffice" />
-		<!-- TODO exercise 10.4: add commercesearchbackoffice here! -->
 		<extension name="commercesearchbackoffice" />
 		
 		<extension name="rulebuilderbackoffice" />
         <extension name="promotionenginebackoffice" />
         <extension name="droolsruleengineservices" />
 		<extension name="promotionenginesamplesaddon" />
+
+		<!-- TODO exercise 14.1: as part of 14.1 you should import the new extension 
+			here -->
+		<extension name="bookstorepayment" />
+
 	</extensions>
 </hybrisconfig>
