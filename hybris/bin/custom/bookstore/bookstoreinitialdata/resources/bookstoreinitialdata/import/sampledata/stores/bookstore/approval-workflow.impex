@@ -43,7 +43,6 @@ Employee;bookManager;;;;;;;;
 
 $END_USERRIGHTS;;;;;
 
-
 UPDATE Employee;UID[unique=true];$setPassword;description;name;groups(uid);sessionLanguage(isocode);sessionCurrency(isocode)
 ;categorizationManager;;Categorization manager;Categorization Manager;productmanagergroup;en;EUR
 ;pricingManager;;Pricing manager;Pricing Manager;productmanagergroup;en;EUR
@@ -61,6 +60,7 @@ INSERT_UPDATE WorkflowTemplate;code[unique=true];name[lang=en];owner(uid);descri
 
 INSERT_UPDATE WorkflowActionTemplate;code[unique=true];name[lang=en];principalAssigned(uid);workflow(code)[unique=true];actionType(code)
 ;BookCategorization;Book Categorization;categorizationManager;BookCreation;start;
+;BookPricing;Book Pricing;pricingManager;BookCreation;start;
 ;BookLocalization;Book Localization;localizationManager;BookCreation;start;
 ;BookApproval;Book Approval;bookManager;BookCreation;normal;
 ;end;End;bookManager;BookCreation;end;
@@ -68,14 +68,18 @@ INSERT_UPDATE WorkflowActionTemplate;code[unique=true];name[lang=en];principalAs
 
 INSERT_UPDATE WorkflowDecisionTemplate;code[unique=true];name[lang=en];actionTemplate(code);
 ;BookCategorizationDone;Categorization done;BookCategorization;
+;BookPricingDone;Pricing done;BookPricing;
 ;BookLocalizationDone;Localization done;BookLocalization;
 ;BookCategorizationRejected;Categorization rejected;BookApproval;
+;BookPricingRejected;Pricing rejected;BookApproval;
 ;BookLocalizationRejected;Localization rejected;BookApproval;
 ;BookApproved;Book approved;BookApproval;
 
 INSERT_UPDATE WorkflowActionTemplateLinkTemplateRelation;source(code)[unique=true];target(code)[unique=true];andConnectionTemplate;qualifier;
 ;BookCategorizationDone;BookApproval;true;WorkflowActionTemplateLinkTemplateRelation;
+;BookPricingDone;BookApproval;true;WorkflowActionTemplateLinkTemplateRelation;
 ;BookLocalizationDone;BookApproval;true;WorkflowActionTemplateLinkTemplateRelation;
 ;BookCategorizationRejected;BookCategorization;false;WorkflowActionTemplateLinkTemplateRelation;
+;BookPricingRejected;BookPricing;false;WorkflowActionTemplateLinkTemplateRelation;
 ;BookLocalizationRejected;BookLocalization;false;WorkflowActionTemplateLinkTemplateRelation;
 ;BookApproved;end;false;WorkflowActionTemplateLinkTemplateRelation;
